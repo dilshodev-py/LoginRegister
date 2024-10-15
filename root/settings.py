@@ -2,7 +2,6 @@ from os.path import join
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = 'django-insecure-pxkok!pxm!q!-6b8*^*xcd=n-3g@*)r$1r@+d0(0c$0ds47l%c'
 
 DEBUG = True

@@ -148,7 +148,9 @@
     <div class="user-icons">
         <button>🔔</button>
         {% if request.user.is_authenticated %}
-            <button>👤</button>
+            <form action="{% url 'profile' %}" method="get">
+                <button type="submit">👤</button>
+            </form>
         {% endif %}
     </div>
 </header>

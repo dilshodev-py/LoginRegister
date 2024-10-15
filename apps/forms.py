@@ -1,8 +1,18 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, CharField, Form
+from django.forms import ModelForm, CharField, Form, EmailField
 
 from apps.models import User
+
+
+
+class ProfileForm(Form):
+    fullname = CharField(max_length=255)
+    address = CharField(max_length=255)
+    phone = CharField(max_length=255)
+    mobile = CharField(max_length=255)
+    email = EmailField()
+
 
 
 class LoginForm(Form):

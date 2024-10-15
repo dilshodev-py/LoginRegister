@@ -4,11 +4,12 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, FormView
 
-from apps.forms import RegisterForm, LoginForm
+from apps.forms import RegisterForm, LoginForm, ProfileForm
+from apps.models import User
 
 
 class HomeTemplateView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'apps/pizza.html'
 
 class RegisterFormView(FormView):
     form_class = RegisterForm
@@ -39,6 +40,26 @@ class LoginFormView(FormView):
             user = form.find_user
             login(self.request , user)
             return super().form_valid(form)
+
+class ProfileTemplateView(TemplateView):
+    template_name = "profile.html"
+
+class ProfileEditFormView(FormView):
+    template_name = "profile-edit.html"
+    success_url = reverse_lazy("profile")
+    form_class = ProfileForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        form_data = form.cleaned_data
+        form_data['first_name'] = form_data.get("fullname").split()[0]
+        form_data['last_name'] = form_data.get("fullname").split()[1]
+        del form_data['fullname']
+        user = User.objects.filter(pk=user.pk)
+        user.update(**form.cleaned_data)
+        return super().form_valid(form)
+
+
 
 
 
